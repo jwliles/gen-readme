@@ -1,0 +1,51 @@
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+* text=auto
+# Force the following filetypes to have unix eols, so Windows does not break them
+*.* text eol=lf
+# Force Git to see binary files
+*.ASMDOT filter=lfs diff=lfs merge=lfs -binary
+*.asmdot filter=lfs diff=lfs merge=lfs -binary
+*.bin filter=lfs diff=lfs merge=lfs -binary
+*.dll filter=lfs diff=lfs merge=lfs -binary
+*.docx filter=lfs diff=lfs merge=lfs -binary
+*.DRWDOT filter=lfs diff=lfs merge=lfs -binary
+*.drwdot filter=lfs diff=lfs merge=lfs -binary
+*.DWG filter=lfs diff=lfs merge=lfs -binary
+*.dwg filter=lfs diff=lfs merge=lfs -binary
+*.DXF filter=lfs diff=lfs merge=lfs -binary
+*.dxf filter=lfs diff=lfs merge=lfs -binary
+*.EDDX filter=lfs diff=lfs merge=lfs -binary
+*.eddx filter=lfs diff=lfs merge=lfs -binary
+*.epub filter=lfs diff=lfs merge=lfs -binary
+*.gif filter=lfs diff=lfs merge=lfs -binary
+*.gz filter=lfs diff=lfs merge=lfs -binary
+*.jpeg filter=lfs diff=lfs merge=lfs -binary
+*.jpg filter=lfs diff=lfs merge=lfs -binary
+*.mobi filter=lfs diff=lfs merge=lfs -binary
+*.mp3 filter=lfs diff=lfs merge=lfs -binary
+*.mp4 filter=lfs diff=lfs merge=lfs -binary
+*.odt filter=lfs diff=lfs merge=lfs -binary
+*.otf filter=lfs diff=lfs merge=lfs -binary
+*.PDF filter=lfs diff=lfs merge=lfs -binary
+*.pdf filter=lfs diff=lfs merge=lfs -binary
+*.png filter=lfs diff=lfs merge=lfs -binary
+*.pptx filter=lfs diff=lfs merge=lfs -binary
+*.SLDASM filter=lfs diff=lfs merge=lfs -binary
+*.sldasm filter=lfs diff=lfs merge=lfs -binary
+*.SLDDRW filter=lfs diff=lfs merge=lfs -binary
+*.slddrw filter=lfs diff=lfs merge=lfs -binary
+*.SLDPRT filter=lfs diff=lfs merge=lfs -binary
+*.sldprt filter=lfs diff=lfs merge=lfs -binary
+*.SLDREG filter=lfs diff=lfs merge=lfs -binary
+*.sldreg filter=lfs diff=lfs merge=lfs -binary
+*.svg filter=lfs diff=lfs merge=lfs -binary
+*.ttf filter=lfs diff=lfs merge=lfs -binary
+*.VSDX filter=lfs diff=lfs merge=lfs -binary
+*.vsdx filter=lfs diff=lfs merge=lfs -binary
+*.wav filter=lfs diff=lfs merge=lfs -binary
+*.webm filter=lfs diff=lfs merge=lfs -binary
+*.webp filter=lfs diff=lfs merge=lfs -binary
+*.x_b filter=lfs diff=lfs merge=lfs -binary
+*.x_t filter=lfs diff=lfs merge=lfs -binary
+*.xlsx filter=lfs diff=lfs merge=lfs -binary

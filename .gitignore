@@ -1,0 +1,8 @@
+# Ignore Dolphin and Windows File Explorer Directory Settings
+.directory
+
+# Ignore Smart Connections folder
+.smart-connections
+
+# Ignore csv files
+.csv
