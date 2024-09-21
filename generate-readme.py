@@ -4,13 +4,14 @@ import argparse
 import logging
 import os
 import sqlite3
-from logger import log_event, log_skipped_file, report_skipped_files
+from logger import log_event, report_skipped_files
 from datetime import datetime
 from readme_writer import write_readme
 from file_scanner import scan_directory_with_parallelism
-from hash_manager import compute_file_hash, save_file_hash
+from hash_manager import load_hashes_from_db
 from make_db import DB_FILE, create_database
 from metrics import ScanMetrics
+from change_detector import detect_changes  # Importing detect_changes from your new module
 
 print(f"Database path being used: {DB_FILE}")
 
@@ -28,39 +29,6 @@ def load_hashes_from_db(db_file):
         logging.error(f"Failed to load hashes from database: {e}")
         log_event("ERROR", f"Failed to load hashes from database: {e}")
     return hashes
-
-
-def detect_changes(directory, stored_hashes):
-    """Detect changes in the directory by comparing file hashes."""
-    changes = []
-    current_file_hashes = {}
-
-    # Scan the directory and compute hashes
-    files_metadata = scan_directory_with_parallelism(directory)
-    for file_path, mtime in files_metadata:
-        file_hash = compute_file_hash(file_path)
-        if file_hash is None:
-            logging.error(f"Hash for {file_path} could not be computed")
-            log_skipped_file(file_path, "Hash could not be computed")  # Log skipped files
-            continue
-
-        if file_hash:
-            current_file_hashes[file_path] = file_hash
-
-            # Check if the file hash has changed
-            if stored_hashes.get(file_path) != file_hash:
-                changes.append(file_path)
-
-            # Save file hash to the database
-            try:
-                logging.info(f"Attempting to save hash for {file_path} with hash {file_hash} and mtime {mtime}")
-                save_file_hash(DB_FILE, file_path, file_hash, mtime)
-                logging.info(f"Successfully saved hash for {file_path}")
-            except Exception as e:
-                logging.error(f"Failed to save hash for {file_path}: {e}")
-                log_event("ERROR", f"Failed to save hash for {file_path}: {e}")
-
-    return changes, current_file_hashes
 
 
 def write_readme_files(directory, changes):
@@ -93,7 +61,7 @@ def scan_directory_and_collect_stats(directory):
     stored_hashes = load_hashes_from_db(DB_FILE)
 
     # Perform the scan and detect changes
-    changes, current_file_hashes = detect_changes(directory, stored_hashes)
+    changes, current_file_hashes = detect_changes(directory, stored_hashes, scan_directory_with_parallelism, DB_FILE)
 
     # Track statistics
     for _ in current_file_hashes:
@@ -131,4 +99,3 @@ if __name__ == "__main__":
 
     # Report skipped files (if any)
     report_skipped_files(DB_FILE)
-
