@@ -28,21 +28,16 @@ class TerminalOutput:
 
 
 def display_scan_statistics(
-    total_files_scanned,
-    skipped_files,
-    readmes_created,
-    readmes_updated,
-    total_time,
-    scan_rate,
+    metrics, skipped_files, readmes_created, readmes_updated, total_files, total_time
 ):
     """Display the scan statistics in the terminal."""
     print("\nScan Statistics:")
-    print(f"Total files scanned: {total_files_scanned}")
+    print(f"Total files scanned: {metrics.files_scanned}")
     print(f"Skipped files: {skipped_files}")
     print(f"README files created: {readmes_created}")
     print(f"README files updated: {readmes_updated}")
     print(f"Total time taken: {total_time:.2f} seconds")
-    print(f"Average scan rate: {scan_rate:.2f} files/second")
+    print(f"Average scan rate: {metrics.files_scanned / total_time:.2f} files/second")
 
 
 def display_progress(current, total):

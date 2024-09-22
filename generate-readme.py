@@ -61,3 +61,7 @@ def main():
 
     # Display the terminal execution time
     print(f"\nThe terminal reports an execution time of {total_time:.3f} seconds.")
+
+
+if __name__ == "__main__":
+    main()
