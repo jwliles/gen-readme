@@ -3,7 +3,7 @@
 import logging
 
 
-def configure_logging(log_level=logging.INFO):
+def configure_logging(log_level=logging.WARNING):
     """
     Configure the logging for the application.
     :param log_level: The logging level (default is INFO)

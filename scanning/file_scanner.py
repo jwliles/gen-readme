@@ -2,6 +2,7 @@
 
 import os
 import concurrent.futures
+import time
 
 
 def get_file_metadata(file_path):
@@ -13,22 +14,22 @@ def get_file_metadata(file_path):
         return None
 
 
-def scan_directory_with_parallelism(directory):
-    """Scan files in the directory using parallel processing, skipping hidden files and directories."""
+def scan_directory_with_parallelism(directory, max_workers=None):
+    """Scan files in the directory using parallel processing."""
     files_metadata = []
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = []
         for root, dirnames, files in os.walk(directory):
             # Skip hidden directories and files
-            dirnames[:] = [
-                d for d in dirnames if not d.startswith(".")
-            ]  # Skip hidden directories
-            files = [f for f in files if not f.startswith(".")]  # Skip hidden files
+            dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+            files = [f for f in files if not f.startswith(".")]
 
-            for file in files:
-                file_path = os.path.join(root, file)
-                futures.append(executor.submit(get_file_metadata, file_path))
+            # Submit batches of files for parallel scanning
+            futures += [
+                executor.submit(get_file_metadata, os.path.join(root, file))
+                for file in files
+            ]
 
         for future in concurrent.futures.as_completed(futures):
             result = future.result()

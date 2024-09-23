@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
+import os
 from metrics.scan_metrics import ScanMetrics
 from detection.change_detector import detect_changes
 from db.hash_db import load_hashes_from_db
-from output.readme_manager import create_or_update_readme
-from .file_scanner import scan_directory_with_parallelism
+from output.readme_manager import process_or_manage_readme_files
 from output.terminal_output import TerminalOutput
-import os
+from .file_scanner import scan_directory_with_parallelism
 
 
 def should_skip_file(file_path):
@@ -41,18 +41,10 @@ def scan_directory_and_collect_stats(directory):
             skipped_files += 1
             continue
 
-        # Get subdirectories and files for the current directory
-        dirpath, dirnames, filenames = next(os.walk(directory))
-
-        subdirs = dirnames
-        files = filenames
-
-        # Write README files if changes are detected
-        if changes:
-            if create_or_update_readme(dirpath, files, subdirs, changes):
-                readmes_created += 1
-            else:
-                readmes_updated += 1
+        # Only pass directory and changes, as process_or_manage_readme_files expects two arguments
+        created, updated = process_or_manage_readme_files(directory, changes)
+        readmes_created += created
+        readmes_updated += updated
 
         # Update progress in the terminal every 10 files
         if idx % 10 == 0 or idx == total_files:
