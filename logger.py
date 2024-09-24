@@ -7,25 +7,27 @@ from logging.handlers import RotatingFileHandler
 DB_FILE = "file_hashes.db"  # Your SQLite database file
 
 
-def setup_logging(log_file="script.log"):
-    """
-    Set up logging to write ONLY to a log file and completely suppress terminal output.
-    """
+def setup_logging():
+    """Set up logging to log only to a file and the database, suppress terminal output."""
+
     # Define a custom logging format
     log_format = "%(asctime)s - %(levelname)s - %(message)s"
 
-    # Set up the root logger to handle log file output
+    # Clear any existing logging handlers to prevent terminal output
+    logging.getLogger().handlers.clear()
+
+    # Set up the root logger to log to a file
+    file_handler = logging.FileHandler("script.log")
+    file_handler.setLevel(logging.DEBUG)  # Log all levels to the file
+    file_handler.setFormatter(logging.Formatter(log_format))
+
+    # Add the file handler to the logger
     root_logger = logging.getLogger()
-    root_logger.setLevel(logging.DEBUG)  # Log all levels to the file
+    root_logger.setLevel(logging.DEBUG)
+    root_logger.addHandler(file_handler)
 
-    # File handler for logging everything into a file
-    log_handler = RotatingFileHandler(log_file, maxBytes=5 * 1024 * 1024, backupCount=5)
-    log_handler.setLevel(logging.DEBUG)  # Log everything to the file
-    log_handler.setFormatter(logging.Formatter(log_format))
-    root_logger.addHandler(log_handler)
-
-    # Ensure no logging is sent to the terminal
-    root_logger.handlers = [log_handler]  # Only log to file, not terminal
+    # If needed, add logging to the database as well
+    # You can use the 'log_event' method from logger.py to log specific events to the DB
 
 
 def log_event(event_type, message):

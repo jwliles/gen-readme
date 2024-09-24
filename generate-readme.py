@@ -8,7 +8,6 @@ from logger import log_event, report_skipped_files
 from datetime import datetime
 from readme_writer import write_readme
 from file_scanner import scan_directory_with_parallelism
-from hash_manager import load_hashes_from_db
 from make_db import DB_FILE, create_database
 from metrics import ScanMetrics
 from change_detector import (
