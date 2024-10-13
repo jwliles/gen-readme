@@ -2,6 +2,7 @@
 
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from tqdm import tqdm
 
 EXCLUDED_DIRS = {".git", ".config", "venv"}  # Add other folders to exclude here
 
