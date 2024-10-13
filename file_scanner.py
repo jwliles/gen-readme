@@ -18,16 +18,25 @@ def process_file(file_path):
         return None
 
 
-def scan_directory_with_parallelism(directory):
+def scan_directory_with_parallelism(directory, max_depth=-1):
     """
     Scan the directory while excluding hidden files and certain folders.
     Uses multithreading to parallelize the scanning of files.
+    max_depth: If specified, limits the depth of directory scanning.
     """
     files_metadata = []
     all_files = []
 
+    def should_scan_directory(current_depth):
+        return max_depth == -1 or current_depth <= max_depth
+
     # Traverse the directory structure and collect all file paths
     for root, dirs, files in os.walk(directory):
+        depth = root[len(directory) :].count(os.sep)
+
+        if not should_scan_directory(depth):
+            continue
+
         # Exclude hidden directories and specific excluded directories
         dirs[:] = [d for d in dirs if not d.startswith(".") and d not in EXCLUDED_DIRS]
         for file in files:
@@ -38,17 +47,15 @@ def scan_directory_with_parallelism(directory):
     total_files = len(all_files)
 
     # Use ThreadPoolExecutor to process files in parallel
-    with ThreadPoolExecutor(max_workers=8) as executor:  # Adjust max_workers as needed
+    with ThreadPoolExecutor(max_workers=8) as executor:
         future_to_file = {
             executor.submit(process_file, file_path): file_path
             for file_path in all_files
         }
 
-        with tqdm(total=total_files, desc="Scanning files") as pbar:
-            for future in as_completed(future_to_file):
-                result = future.result()
-                if result:
-                    files_metadata.append(result)
-                pbar.update(1)
+        for future in as_completed(future_to_file):
+            result = future.result()
+            if result:
+                files_metadata.append(result)
 
     return files_metadata
