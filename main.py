@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
 import json
 import logging
+import os
 import sqlite3
-from datetime import datetime
-from logger import log_event, report_skipped_files
+
+from change_detector import detect_changes
 from file_scanner import scan_directory_with_parallelism
+from logger import log_event, report_skipped_files
 from make_db import DB_FILE, create_database
 from metrics import ScanMetrics
-from change_detector import detect_changes
 from readme_generator import generate_all_readme_files  # Now importing from the renamed module
 
 print(f"Database path being used: {DB_FILE}")
@@ -59,12 +59,13 @@ def scan_directory_and_collect_stats(directory, depth):
         metrics.increment_files_scanned()  # Increment total files scanned
 
     # Generate README files for all directories (now handled by readme_generator.py)
-    generate_all_readme_files(directory, changes, use_template=False)
+    generate_all_readme_files(directory, changes, metrics, use_template=False)
 
     metrics.stop_timer()  # Stop the timer
     metrics.display_metrics()  # Display statistics
 
     log_event("INFO", "Scan completed")
+
 
 def main():
     settings = load_settings()
