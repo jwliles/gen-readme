@@ -7,14 +7,13 @@ import logging
 import sqlite3
 from datetime import datetime
 from logger import log_event, report_skipped_files
-from readme_writer import write_readme
 from file_scanner import scan_directory_with_parallelism
 from make_db import DB_FILE, create_database
 from metrics import ScanMetrics
 from change_detector import detect_changes
+from readme_generator import generate_all_readme_files  # Now importing from the renamed module
 
 print(f"Database path being used: {DB_FILE}")
-
 
 # Load settings from JSON
 def load_settings():
@@ -22,7 +21,7 @@ def load_settings():
     with open("settings.json", "r") as f:
         return json.load(f)
 
-
+# Load hashes from the database
 def load_hashes_from_db(db_file):
     """Load hashes from the database."""
     hashes = {}
@@ -36,40 +35,6 @@ def load_hashes_from_db(db_file):
         logging.error(f"Failed to load hashes from database: {e}")
         log_event("ERROR", f"Failed to load hashes from database: {e}")
     return hashes
-
-
-def write_readme_files(directory, changes):
-    try:
-        logging.info(f"Processing directory: {directory}")
-
-        # List subdirectories and files
-        subdirs = [
-            d
-            for d in os.listdir(directory)
-            if os.path.isdir(os.path.join(directory, d))
-        ]
-        files = [
-            f
-            for f in os.listdir(directory)
-            if os.path.isfile(os.path.join(directory, f))
-        ]
-
-        # Write the README for the current directory
-        date_str = datetime.now().strftime("%Y-%m-%d")
-        write_readme(directory, files, subdirs, date_str)
-
-        # Always log that README is generated
-        logging.info(f"README generated for {directory}")
-        log_event("INFO", f"README generated for {directory}")
-
-        # Recursively handle subdirectories
-        for subdir in subdirs:
-            subdir_path = os.path.join(directory, subdir)
-            write_readme_files(subdir_path, changes)
-    except Exception as e:
-        logging.error(f"Error in write_readme_files: {e}")
-        log_event("ERROR", f"Error in write_readme_files: {e}")
-
 
 # Main function to scan directory and collect statistics
 def scan_directory_and_collect_stats(directory, depth):
@@ -93,18 +58,13 @@ def scan_directory_and_collect_stats(directory, depth):
     for _ in current_file_hashes:
         metrics.increment_files_scanned()  # Increment total files scanned
 
-    # Write README files and update statistics
-    if changes:
-        write_readme_files(directory, changes)  # Update the README
-        for file in changes:
-            if "README.md" in file:
-                metrics.increment_readme_updated()
+    # Generate README files for all directories (now handled by readme_generator.py)
+    generate_all_readme_files(directory, changes, use_template=False)
 
     metrics.stop_timer()  # Stop the timer
     metrics.display_metrics()  # Display statistics
 
     log_event("INFO", "Scan completed")
-
 
 def main():
     settings = load_settings()
