@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import os
 import hashlib
+import logging
+import os
 from datetime import datetime
 
 # Template for README (you can enable this later)
@@ -53,7 +54,7 @@ def create_readme_file(directory, files, subdirs, date_str, use_template=False):
     print(f"Generated README for {directory}")
 
 # Recursive function to generate README files for all directories and subdirectories
-def generate_all_readme_files(directory, changes, use_template=False):
+def generate_all_readme_files(directory, changes, metrics, use_template=False):
     """Recursively generates README.md files for all directories."""
     try:
         # List subdirectories and files
@@ -66,14 +67,22 @@ def generate_all_readme_files(directory, changes, use_template=False):
             if os.path.isfile(os.path.join(directory, f))
         ]
 
+        # Track processed directory
+        metrics.increment_files_scanned()
+
         # Generate the README for the current directory
+        logging.debug(f"Generating README for {directory}")
         date_str = datetime.now().strftime("%Y-%m-%d")
-        create_readme_file(directory, files, subdirs, date_str, use_template)
+
+        # Assume write_readme will return True if the README is created or updated
+        if create_readme_file(directory, files, subdirs, date_str, use_template):
+            metrics.increment_readme_created() if changes else metrics.increment_readme_updated()
 
         # Recursively handle subdirectories
         for subdir in subdirs:
             subdir_path = os.path.join(directory, subdir)
-            generate_all_readme_files(subdir_path, changes, use_template)
+            generate_all_readme_files(subdir_path, changes, metrics, use_template)
 
     except Exception as e:
-        print(f"Error generating README for {directory}: {e}")
+        logging.error(f"Error generating README for {directory}: {e}")
+        metrics.increment_skipped_files()
