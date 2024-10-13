@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import time
-from logger import log_event  # Import logging to store metrics in the database
+
+from logger import log_event
 
 
 class ScanMetrics:
