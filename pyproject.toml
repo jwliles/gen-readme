@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "gen-readme"
+version = "0.1.0"
+description = "Generates README files"
+authors = ["jwliles <13804903+jwliles@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+urllib3 = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
