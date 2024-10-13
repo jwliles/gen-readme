@@ -5,6 +5,7 @@ import os
 import json
 import logging
 import sqlite3
+from datetime import datetime
 from logger import log_event, report_skipped_files
 from readme_writer import write_readme
 from file_scanner import scan_directory_with_parallelism
@@ -38,9 +39,7 @@ def load_hashes_from_db(db_file):
 
 
 def write_readme_files(directory, changes):
-    """Write README.md files for the directory and its subdirectories."""
     try:
-        # Log the directories being processed
         logging.info(f"Processing directory: {directory}")
 
         # List subdirectories and files
@@ -55,16 +54,18 @@ def write_readme_files(directory, changes):
             if os.path.isfile(os.path.join(directory, f))
         ]
 
-        # Write the README
+        # Write the README for the current directory
         date_str = datetime.now().strftime("%Y-%m-%d")
         write_readme(directory, files, subdirs, date_str)
 
-        if changes:
-            logging.info(f"Updated README for {directory}.")
-            log_event("INFO", f"README updated for {directory}")
-        else:
-            logging.info(f"No changes detected for {directory}. README not updated.")
+        # Always log that README is generated
+        logging.info(f"README generated for {directory}")
+        log_event("INFO", f"README generated for {directory}")
 
+        # Recursively handle subdirectories
+        for subdir in subdirs:
+            subdir_path = os.path.join(directory, subdir)
+            write_readme_files(subdir_path, changes)
     except Exception as e:
         logging.error(f"Error in write_readme_files: {e}")
         log_event("ERROR", f"Error in write_readme_files: {e}")
