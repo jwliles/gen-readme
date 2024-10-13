@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
 
 import argparse
-import logging
 import os
+import json
+import logging
 import sqlite3
 from logger import log_event, report_skipped_files
-from datetime import datetime
 from readme_writer import write_readme
 from file_scanner import scan_directory_with_parallelism
 from make_db import DB_FILE, create_database
 from metrics import ScanMetrics
-from change_detector import (
-    detect_changes,
-)  # Importing detect_changes from your new module
+from change_detector import detect_changes
 
 print(f"Database path being used: {DB_FILE}")
+
+
+# Load settings from JSON
+def load_settings():
+    """Load the user settings from settings.json."""
+    with open("settings.json", "r") as f:
+        return json.load(f)
 
 
 def load_hashes_from_db(db_file):
@@ -35,6 +40,9 @@ def load_hashes_from_db(db_file):
 def write_readme_files(directory, changes):
     """Write README.md files for the directory and its subdirectories."""
     try:
+        # Log the directories being processed
+        logging.info(f"Processing directory: {directory}")
+
         # List subdirectories and files
         subdirs = [
             d
@@ -54,13 +62,16 @@ def write_readme_files(directory, changes):
         if changes:
             logging.info(f"Updated README for {directory}.")
             log_event("INFO", f"README updated for {directory}")
+        else:
+            logging.info(f"No changes detected for {directory}. README not updated.")
 
     except Exception as e:
         logging.error(f"Error in write_readme_files: {e}")
         log_event("ERROR", f"Error in write_readme_files: {e}")
 
 
-def scan_directory_and_collect_stats(directory):
+# Main function to scan directory and collect statistics
+def scan_directory_and_collect_stats(directory, depth):
     """Scan the directory and collect statistics for reporting."""
     metrics = ScanMetrics()  # Initialize the ScanMetrics object
     metrics.start_timer()  # Start the timer
@@ -71,7 +82,10 @@ def scan_directory_and_collect_stats(directory):
 
     # Perform the scan and detect changes
     changes, current_file_hashes = detect_changes(
-        directory, stored_hashes, scan_directory_with_parallelism, DB_FILE
+        directory,
+        stored_hashes,
+        lambda d: scan_directory_with_parallelism(d, depth),
+        DB_FILE,
     )
 
     # Track statistics
@@ -85,34 +99,56 @@ def scan_directory_and_collect_stats(directory):
             if "README.md" in file:
                 metrics.increment_readme_updated()
 
-    # Simulate skipped files count (this should be replaced with actual logic)
-    metrics.skipped_files_count = 5  # Replace with actual skipped files logic
-
     metrics.stop_timer()  # Stop the timer
     metrics.display_metrics()  # Display statistics
 
     log_event("INFO", "Scan completed")
 
 
-if __name__ == "__main__":
+def main():
+    settings = load_settings()
+    default_folder = settings.get("default_folder")
+
     parser = argparse.ArgumentParser(
         description="Generate README files for a directory and its subdirectories."
     )
     parser.add_argument(
         "-p",
         "--path",
-        help="Root directory path. Defaults to the current working directory.",
-        default=os.getcwd(),
+        help="Root directory path. Defaults to the current working directory or a user-defined default folder.",
+        default=None,
     )
+    parser.add_argument(
+        "-d",
+        "--depth",
+        help="Depth to scan into the directory structure. Defaults to unlimited depth.",
+        type=int,
+        default=-1,
+    )
+
     args = parser.parse_args()
 
-    root_path = args.path
+    # Determine the path
+    if args.path is None:
+        if default_folder:
+            print(f"Using default folder: {default_folder}")
+            root_path = default_folder
+        else:
+            root_path = os.getcwd()  # Fallback to current directory
+    elif args.path == ".":
+        root_path = os.getcwd()
+    else:
+        root_path = args.path
 
     # Ensure database is created and ready
     create_database()
 
     # Call the scanning function and collect statistics
-    scan_directory_and_collect_stats(root_path)
+    scan_directory_and_collect_stats(root_path, args.depth)
 
     # Report skipped files (if any)
     report_skipped_files(DB_FILE)
+
+
+if __name__ == "__main__":
+    main()
