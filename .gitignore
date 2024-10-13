@@ -3,3 +3,6 @@
 
 # Ignore csv files
 .csv
+
+#Ignore test directory
+test_dir/
