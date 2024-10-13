@@ -1,8 +1,78 @@
-# Ignore Dolphin and Windows File Explorer Directory Settings
-.directory
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Ignore csv files
-.csv
+# C extensions
+*.so
 
-#Ignore test directory
+# Virtual environment
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 test_dir/
+
+# Jupyter Notebook files
+*.ipynb_checkpoints
+
+# Setuptools egg info / pip-wheel-metadata
+*.egg-info/
+.installed.cfg
+.venv/
+.pip-wheel-metadata/
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Cover my test reports
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# PyCharm
+.idea/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Flask and Django stuff:
+instance/
+.webassets-cache
+*.log
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# Pytest
+.pytest_cache/
+
+# Environments
+.env
+.venv
+.spyderproject
+.spyproject
+
+# Mac stuff
+.DS_Store
+
+# Windows stuff
+Thumbs.db
+ehthumbs.db
+*.stackdump
