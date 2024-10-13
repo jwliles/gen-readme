@@ -1,4 +1,4 @@
-# change_detector.py
+#!/usr/bin/env python3
 
 import logging
 from hash_manager import compute_file_hash, save_file_hash
