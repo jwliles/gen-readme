@@ -9,7 +9,10 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 urllib3 = "^2.2.3"
+snakeviz = "^2.2.0"
 
+[tool.poetry.scripts]
+gen_readme = "gen_readme.main:main" # Entry point for the CLI command
 
 [build-system]
 requires = ["poetry-core"]
