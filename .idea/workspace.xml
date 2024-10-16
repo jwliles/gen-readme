@@ -5,22 +5,67 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f02bdc48-e607-43d2-99bc-5a6877360afe" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gen-readme.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/file_scanner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hash_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logger.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/make_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/readme_writer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate-readme.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate-readme.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/be14ad96-92c5-4597-8aab-1517ae558609.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/be14ad96-92c5-4597-8aab-1517ae558609/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file_scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/file_scanner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_1/file_4.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_1/file_7.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_1/subdir_1_0/file_1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_101/placeholder.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_103/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_108/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_109/file_2.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_109/file_4.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_109/subdir_109_0/file_3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_109/subdir_109_1/file_1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_109/subdir_109_1/file_2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_11/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_11/file_2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_11/file_4.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_11/file_5.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_11/file_7.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_11/subdir_11_0/file_7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_18/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_2/file_3.org" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_2/file_4.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_2/file_6.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_2/file_7.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_2/file_8.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_2/subdir_2_1/file_3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_20/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_26/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_31/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_34/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_35/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_36/file_4.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_37/file_2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_42/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_42/file_1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_45/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_48/file_2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_5/file_2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_5/file_3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_5/subdir_5_1/file_1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_5/subdir_5_2/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_53/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_54/file_5.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_55/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_56/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_62/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_67/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_7/file_0.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_76/file_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_82/file_0.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_91/file_1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_96/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_98/file_0.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_98/file_1.nomedia" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_98/file_2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_98/file_5.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_dir/main_dir_98/subdir_98_0/file_2.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,39 +75,39 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2mLfg5aJTfLkjnEIA1WFLF2F52p" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/jwl/projects/gen-readme",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;restore&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jwl/projects/projects/python/gen-readme&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.22855.92" />
-        <option value="bundled-python-sdk-b068d85d1acf-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.22855.92" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
+        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
       </set>
     </attachedChunks>
   </component>
@@ -75,6 +120,9 @@
       <option name="presentableId" value="Default" />
       <updated>1726860885842</updated>
       <workItem from="1726860886881" duration="3110000" />
+      <workItem from="1728855613911" duration="238000" />
+      <workItem from="1728855879043" duration="585000" />
+      <workItem from="1728857084156" duration="6866000" />
     </task>
     <servers />
   </component>
