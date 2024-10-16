@@ -2,7 +2,7 @@
 
 import time
 
-from logger import log_event
+from gen_readme.logger import log_event
 
 
 class ScanMetrics:

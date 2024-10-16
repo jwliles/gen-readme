@@ -6,20 +6,28 @@ import logging
 import os
 import sqlite3
 
-from change_detector import detect_changes
-from file_scanner import scan_directory_with_parallelism
-from logger import log_event, report_skipped_files
-from make_db import DB_FILE, create_database
-from metrics import ScanMetrics
-from readme_generator import generate_all_readme_files  # Now importing from the renamed module
+from gen_readme.change_detector import detect_changes
+from gen_readme.file_scanner import scan_directory_with_parallelism
+from gen_readme.logger import log_event, report_skipped_files
+from gen_readme.make_db import DB_FILE, create_database
+from gen_readme.metrics import ScanMetrics
+from gen_readme.readme_generator import (
+    generate_all_readme_files,
+)  # Now importing from the renamed module
 
 print(f"Database path being used: {DB_FILE}")
+
 
 # Load settings from JSON
 def load_settings():
     """Load the user settings from settings.json."""
-    with open("settings.json", "r") as f:
-        return json.load(f)
+    try:
+        with open("settings.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logging.error("Settings file not found.")
+        return {}
+
 
 # Load hashes from the database
 def load_hashes_from_db(db_file):
@@ -36,49 +44,48 @@ def load_hashes_from_db(db_file):
         log_event("ERROR", f"Failed to load hashes from database: {e}")
     return hashes
 
+
 # Main function to scan directory and collect statistics
 def scan_directory_and_collect_stats(directory, depth):
     """Scan the directory and collect statistics for reporting."""
-    metrics = ScanMetrics()  # Initialize the ScanMetrics object
-    metrics.start_timer()  # Start the timer
+    metrics = ScanMetrics()
+    metrics.start_timer()
     log_event("INFO", "Scan started")
 
-    # Load hashes from the database
     stored_hashes = load_hashes_from_db(DB_FILE)
 
     # Perform the scan and detect changes
     changes, current_file_hashes = detect_changes(
         directory,
         stored_hashes,
-        lambda d: scan_directory_with_parallelism(d, depth),
+        lambda d: scan_directory_with_parallelism(
+            d, max_workers=4
+        ),  # Set max_workers properly
         DB_FILE,
     )
 
     # Track statistics
     for _ in current_file_hashes:
-        metrics.increment_files_scanned()  # Increment total files scanned
+        metrics.increment_files_scanned()
 
-    # Generate README files for all directories (now handled by readme_generator.py)
     generate_all_readme_files(directory, changes, metrics, use_template=False)
 
-    metrics.stop_timer()  # Stop the timer
-    metrics.display_metrics()  # Display statistics
-
+    metrics.stop_timer()
+    metrics.display_metrics()
     log_event("INFO", "Scan completed")
 
 
 def main():
-    settings = load_settings()
-    default_folder = settings.get("default_folder")
-
     parser = argparse.ArgumentParser(
-        description="Generate README files for a directory and its subdirectories."
+        description="Generate README files for a directory and its subdirectories.",
+        epilog="Example: main.py --path /mydir --depth 2 --verbose",
     )
     parser.add_argument(
         "-p",
         "--path",
-        help="Root directory path. Defaults to the current working directory or a user-defined default folder.",
-        default=None,
+        help="Root directory path. Defaults to the current working directory.",
+        default=os.getcwd(),
+        metavar="DIR",
     )
     parser.add_argument(
         "-d",
@@ -86,9 +93,30 @@ def main():
         help="Depth to scan into the directory structure. Defaults to unlimited depth.",
         type=int,
         default=-1,
+        metavar="N",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Enable verbose output (for development and debugging).",
+        action="store_true",
     )
 
     args = parser.parse_args()
+
+    # Configure logging level based on verbose flag
+    if args.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
+    # Load settings after argument parsing
+    settings = load_settings()
+
+    root_path = args.path
+    logging.debug(
+        f"Database path being used: {settings.get('db_path', 'file_hashes.db')}"
+    )
 
     # Determine the path
     if args.path is None:
@@ -113,4 +141,11 @@ def main():
 
 
 if __name__ == "__main__":
+    import cProfile, pstats
+
+    #    profiler = cProfile.Profile()
+    #    profiler.enable()
     main()
+#    profiler.disable()
+#    stats = pstats.Stats(profiler).sort_stats("tottime")
+#    stats.print_stats()

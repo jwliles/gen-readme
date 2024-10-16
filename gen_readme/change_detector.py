@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import logging
-from hash_manager import compute_file_hash, save_file_hash
-from logger import log_skipped_file, log_event
+from gen_readme.hash_manager import compute_file_hash, save_file_hash
+from gen_readme.logger import log_skipped_file, log_event
 
 
 def detect_changes(directory, stored_hashes, scan_directory_with_parallelism, DB_FILE):
