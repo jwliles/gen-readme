@@ -78,7 +78,7 @@ def scan_directory_and_collect_stats(directory, depth):
 def main():
     parser = argparse.ArgumentParser(
         description="Generate README files for a directory and its subdirectories.",
-        epilog="Example: main.py --path /mydir --depth 2 --verbose",
+        epilog="Example usage: gen_readme -p /mydir -d 2 -v",
     )
     parser.add_argument(
         "-p",
@@ -98,45 +98,23 @@ def main():
     parser.add_argument(
         "-v",
         "--verbose",
-        help="Enable verbose output (for development and debugging).",
+        help="Enable verbose output for debugging.",
         action="store_true",
     )
 
     args = parser.parse_args()
 
     # Configure logging level based on verbose flag
-    if args.verbose:
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
 
-    # Load settings after argument parsing
-    settings = load_settings()
-
+    # Set the root path and ensure the database is created
     root_path = args.path
-    logging.debug(
-        f"Database path being used: {settings.get('db_path', 'file_hashes.db')}"
-    )
-
-    # Determine the path
-    if args.path is None:
-        if default_folder:
-            print(f"Using default folder: {default_folder}")
-            root_path = default_folder
-        else:
-            root_path = os.getcwd()  # Fallback to current directory
-    elif args.path == ".":
-        root_path = os.getcwd()
-    else:
-        root_path = args.path
-
-    # Ensure database is created and ready
     create_database()
 
     # Call the scanning function and collect statistics
     scan_directory_and_collect_stats(root_path, args.depth)
 
-    # Report skipped files (if any)
+    # Report any skipped files
     report_skipped_files(DB_FILE)
 
 
